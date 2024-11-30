@@ -1,4 +1,5 @@
 bin = [
+  { name = "playground", path = "exercises/playground.rs" },
   { name = "intro1", path = "exercises/00_intro/intro1.rs" },
   { name = "intro1_sol", path = "solutions/00_intro/intro1.rs" },
   { name = "intro2", path = "exercises/00_intro/intro2.rs" },

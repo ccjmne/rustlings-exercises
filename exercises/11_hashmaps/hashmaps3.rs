@@ -1,6 +1,6 @@
 // A list of scores (one per line) of a soccer match is given. Each line is of
 // the form "<team_1_name>,<team_2_name>,<team_1_goals>,<team_2_goals>"
-// Example: "England,France,4,2" (England scored 4 goals, France 2).
+// Example: "England,France,2,4" (England scored 2 goals, France 4).
 //
 // You have to build a scores table containing the name of the team, the total
 // number of goals the team scored, and the total number of goals the team
@@ -31,6 +31,26 @@ fn build_scores_table(results: &str) -> HashMap<&str, TeamScores> {
         // Keep in mind that goals scored by team 1 will be the number of goals
         // conceded by team 2. Similarly, goals scored by team 2 will be the
         // number of goals conceded by team 1.
+        scores
+            .entry(team_1_name)
+            .and_modify(|scores| {
+                scores.goals_scored += team_1_score;
+                scores.goals_conceded += team_2_score;
+            })
+            .or_insert(TeamScores {
+                goals_scored: team_1_score,
+                goals_conceded: team_2_score,
+            });
+        scores
+            .entry(team_2_name)
+            .and_modify(|scores| {
+                scores.goals_scored += team_2_score;
+                scores.goals_conceded += team_1_score;
+            })
+            .or_insert(TeamScores {
+                goals_scored: team_2_score,
+                goals_conceded: team_1_score,
+            });
     }
 
     scores
